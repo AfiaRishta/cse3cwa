@@ -37,3 +37,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 - feat: hamburger menu with CSS transform (branch)
 
+- feat: light/dark theme toggle (branch)
+
