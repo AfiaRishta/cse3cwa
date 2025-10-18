@@ -1,13 +1,16 @@
+// Components/Header.tsx
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
-import ThemeToggle from "@/Components/ThemeToggle"; // fixed case
+import { useEffect, useState } from "react";
+import ThemeToggle from "@/Components/ThemeToggle";
 import { SITE_TITLE, STUDENT_NO } from "@/lib/config";
+import { MENU_ACTIVE_KEY, safeGet, safeSet } from "@/lib/prefs";
 
 export default function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [active, setActive] = useState<string>("/");
 
   const links = [
     { href: "/", label: "Home" },
@@ -18,15 +21,27 @@ export default function Header() {
     { href: "/court-room", label: "Court Room" },
   ];
 
+  // 1) On first mount: restore previous active link (or current path)
+  useEffect(() => {
+    const stored = safeGet(MENU_ACTIVE_KEY);
+    setActive(stored || pathname);
+  }, []); // run once
+
+  // 2) On every route change: update and persist
+  useEffect(() => {
+    setActive(pathname);
+    safeSet(MENU_ACTIVE_KEY, pathname);
+  }, [pathname]);
+
   return (
     <header className="site-header" role="banner">
       <div className="header-inner">
-        {/* Left side → site title only */}
+        {/* Left: site title */}
         <div className="brand" aria-label="Site identity">
           <span aria-label="Site title">{SITE_TITLE}</span>
         </div>
 
-        {/* Nav + controls in the middle */}
+        {/* Middle: nav + hamburger + theme */}
         <div className="hambox">
           <nav
             id="primary-navigation"
@@ -34,16 +49,24 @@ export default function Header() {
             aria-label="Primary"
             aria-hidden={open ? "false" : "true"}
           >
-            {links.map((l) => (
-              <Link
-                key={l.href}
-                href={l.href}
-                aria-current={pathname === l.href ? "page" : undefined}
-              >
-                {l.label}
-              </Link>
-            ))}
+            {links.map((l) => {
+              const isActive = active === l.href;
+              return (
+                <Link
+                  key={l.href}
+                  href={l.href}
+                  aria-current={isActive ? "page" : undefined}
+                  style={{
+                    fontWeight: isActive ? 700 : 400,
+                    textDecoration: isActive ? "underline" : "none",
+                  }}
+                >
+                  {l.label}
+                </Link>
+              );
+            })}
           </nav>
+
           <button
             className="hamburger"
             aria-controls="primary-navigation"
@@ -55,10 +78,11 @@ export default function Header() {
             <span className="bar" />
             <span className="bar" />
           </button>
+
           <ThemeToggle />
         </div>
 
-        {/* Right side → student number */}
+        {/* Right: student number */}
         <span className="student-badge" aria-label="Student number">
           {STUDENT_NO}
         </span>
