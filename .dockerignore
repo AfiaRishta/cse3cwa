@@ -1,0 +1,5 @@
+Set-Content -Path .dockerignore -Value @"
+node_modules
+.next/cache
+.git
+"@
