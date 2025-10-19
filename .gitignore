@@ -5,3 +5,5 @@ out/
 .DS_Store
 
 /lib/generated/prisma
+# Ignore large video and media files
+*.mp4
