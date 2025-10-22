@@ -3,8 +3,11 @@ frontend:
   phases:
     preBuild:
       commands:
-        # use npm install if no lockfile exists
-        - if [ -f package-lock.json ]; then npm ci; else npm install; fi
+        # Full clean and reinstall to remove cached artifacts
+        - rm -rf node_modules .next
+        - npm install
+        # Precompile all TS files for Amplify (important!)
+        - npx tsc --project tsconfig.json
     build:
       commands:
         - npm run build
@@ -13,5 +16,4 @@ frontend:
     files:
       - '**/*'
   cache:
-    paths:
-      - node_modules/**/*
+    paths: []
