@@ -1,0 +1,17 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        # If your repo doesn't have package-lock.json, use `npm install` instead of `npm ci`.
+        - if [ -f package-lock.json ]; then npm ci; else npm install; fi
+    build:
+      commands:
+        - npm run build
+  artifacts:
+    baseDirectory: .next
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*

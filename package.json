@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": ">=20 <23"
+    "node": "18.x"
   },
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build --no-lint --turbopack",
+    "build": "next build",
     "start": "next start",
     "lint": "eslint",
     "test:e2e": "playwright test --ui"
@@ -32,3 +32,4 @@
     "typescript": "^5"
   }
 }
+
