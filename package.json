@@ -6,30 +6,24 @@
     "node": "18.x"
   },
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint",
-    "test:e2e": "playwright test --ui"
+    "lint": "next lint"
   },
   "dependencies": {
-    "@prisma/client": "^6.16.3",
-    "next": "15.5.0",
+    "@prisma/client": "^5.15.0",
+    "next": "15.1.2",
     "react": "18.3.1",
     "react-dom": "18.3.1"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3",
-    "@playwright/test": "^1.56.0",
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "eslint": "^9",
-    "eslint-config-next": "15.5.0",
-    "prisma": "^6.16.3",
-    "tailwindcss": "^4",
-    "typescript": "^5"
+    "@types/node": "^20.5.0",
+    "@types/react": "^18.2.14",
+    "@types/react-dom": "^18.2.7",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "15.1.2",
+    "prisma": "^5.15.0",
+    "typescript": "^5.3.3"
   }
 }
-
